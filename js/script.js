@@ -1,6 +1,7 @@
 'use strict';
 
 function titleClickHandler(event){ //event- kliknięcie
+  event.preventDefault(); /*wyłączenie hasha przewijania, adres się nie zmienia*/
   const clickedElement = this;
   console.log('Link was clicked!');
   console.log(event);
@@ -12,7 +13,7 @@ function titleClickHandler(event){ //event- kliknięcie
       activeLink.classList.remove('active');
     }
 
-  /* [IN PROGRESS]add class 'active' to the clicked link */
+  /* [IN DONE PROGRESS]add class 'active' to the clicked link */
   console.log('clickedElement', clickedElement);
   clickedElement.classList.add('active');
 
@@ -24,10 +25,14 @@ function titleClickHandler(event){ //event- kliknięcie
     }
 
   /* get 'href' attribute from the clicked link */
-
+  const articleSelector = clickedElement.getAttribute("href"); /*zwraca wartość atrybutu href */
+  console.log(articleSelector);
   /* find the correct article using the selector (value of 'href' attribute) */
+  const targetArticle = document.querySelector(articleSelector);
+  console.log(targetArticle);
 
-  /* add class 'active' to the correct article */
+  /*add class 'active' to the correct article*/ 
+  targetArticle.classList.add('active');
 }
 
 const links = document.querySelectorAll('.titles a');
