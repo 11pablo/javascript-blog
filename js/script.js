@@ -66,7 +66,7 @@ function generateTitleLinks(){
     console.log('code link:' + linkHTML);
 
     /* [DONE] insert link into titleList */
-    titleList.insertAdjacentHTML('afterbegin', linkHTML);
+    titleList.insertAdjacentHTML('beforeend', linkHTML);
     /*html = html + linkHTML;
     console.log(html);*/
   }
