@@ -205,3 +205,20 @@ function generateAuthors(){
 generateAuthors();
 
 
+
+function addClickListenersToAuthor(){
+  /* [DONE]find all links to tags */
+  const LinksToTag = document.querySelectorAll('a[href^="#author-"]'); 
+  /*console.log(LinksToTag);*/
+  /*[DONE] START LOOP: for each link*/ 
+  for (let link of LinksToTag){  
+    /* [DONE] add tagClickHandler as event listener for that link */
+    link.addEventListener('click', authorClickHandler);
+    /*console.log(link);*/
+  /* END LOOP: for each link */
+  }
+}
+
+addClickListenersToAuthor();
+
+
