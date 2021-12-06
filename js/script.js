@@ -206,6 +206,43 @@ generateAuthors();
 
 
 
+function authorClickHandler(event){
+  /* [DONE] prevent default action for this event */
+  event.preventDefault();
+  /* make new constant named "clickedElement" and give it the value of "this" */
+  const clickedElement = this;
+  /* [DONE] make a new constant "href" and read the attribute "href" of the clicked element */
+  const href = clickedElement.getAttribute('href');
+  /*console.log(href);*/
+  /* [DONE] make a new constant "tag" and extract tag from the "href" constant */
+  const author = href.replace('#author-', ''); 
+  /*console.log(author);*/
+  /* find all tag links with class active */
+  const activeAuthorsLinks = document.querySelectorAll('a.active[href^="#tag-"]');
+  /*console.log(activeAuthorsLinks);*/
+  /* [DONE] START LOOP: for each active tag link */
+  for (let activeAuthorLink of activeAuthorsLinks) { 
+    /*console.log(activeAuthorLink);*/
+    /* [DONE] remove class active */
+    activeAuthorLink.classList.remove('active'); 
+  /* END LOOP: for each active tag link */
+  }
+  /* [DONE] find all tag links with "href" attribute equal to the "href" constant */
+  const authorsLinks = document.querySelectorAll('a[href="' + href + '"]');
+  /*console.log(authorsLinks);*/
+  /* [DONE] START LOOP: for each found tag link */
+  for (let authorLink of authorsLinks) {
+    /*console.log(linkToTagHref);*/
+    /* [DONE] add class active */ //dodaj klasę aktywną
+    authorLink.classList.add('active');
+  /* END LOOP: for each found tag link */
+  }
+  /* [DONE] execute function "generateTitleLinks" with article selector as argument */
+  generateTitleLinks('[data-author="' + author + '"]');
+}
+
+
+
 function addClickListenersToAuthor(){
   /* [DONE]find all links to tags */
   const LinksToTag = document.querySelectorAll('a[href^="#author-"]'); 
