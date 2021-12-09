@@ -28,14 +28,13 @@ function titleClickHandler(event){ //event- kliknięcie
   targetArticle.classList.add('active');
 }
 
-
-
-
 const optArticleSelector = '.post',
   optArticleAuthorSelector= '.post-author',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list';
+  optArticleTagsSelector = '.post-tags .list',
+  optCloudClassCount = 5,
+  optCloudClassPrefix = 'tag-size-';
 function generateTitleLinks(customSelector = ''){
   /* [DONE] remove contents of titleList */
   const titleList = document.querySelector(optTitleListSelector);
@@ -67,12 +66,32 @@ function generateTitleLinks(customSelector = ''){
 }
 generateTitleLinks();
 
+/*create function calculateTagsParams*/
+function calculateTagsParams(tags) {
+  const params = { max: 0, min: 999999 };
+  for(let tag in tags){
+    console.log(tag + ' is used ' + tags[tag] + ' times');
+    if(tags[tag] > params.max){
+      params.max = tags[tag];
+    } else if(tags[tag] < params.min){
+      params.min = tags[tag];
+    }
+  }
+  return params;
+}
 
-
+/*determining the size of tags*/
+function calculateTagClass(count, params){
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
+  return optCloudClassPrefix + classNumber;
+}
 
 function generateTags(){
-  /* [NEW] create a new variable allTags with an empty array */
-  let allTags = [];
+  /* [NEW] create a new variable allTags with an empty object */
+  let allTags = {};
   /* [DONE]find all articles */
   const articles = document.querySelectorAll(optArticleSelector); 
   /*console.log(articles);*/
@@ -99,9 +118,11 @@ function generateTags(){
       /* [DONE] add generated code to html variable */
       tagList.insertAdjacentHTML('beforeend', linkHTML);
       /* [NEW] check if this link is NOT already in allTags */
-      if(allTags.indexOf(linkHTML) == -1){ //jeśli nie istnieje zapisz
-        /* [NEW] add generated code to allTags array */
-        allTags.push(linkHTML);
+      if(!allTags.hasOwnProperty(tag)){ 
+        /* [NEW] add tag to allTags object */
+        allTags[tag] = 1;
+      } else {
+        allTags[tag]++;
       }
     /* END LOOP: for each tag */
     }
@@ -111,13 +132,23 @@ function generateTags(){
   }
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector('.tags');
+  const tagsParams = calculateTagsParams(allTags);
+  console.log('tagsParams:',tagsParams);
+  /*[NEW] create variable for all links HTML code */
+  let allTagsHTML = '';
 
-  /* [NEW] add html from allTags to tagList */
-  tagList.innerHTML = allTags.join(' ');
+  /*[NEW] START LOOP: for each tag in allTags */
+  for(let tag in allTags){
+    /*console.log(tag);*/
+    /*[NEW] generate code of a link and add it to allTagsHTML */
+    allTagsHTML +='<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '"><span>' + tag + ' (' + allTags[tag] + ')'+ '&nbsp</span></a></li>';
+  }
+  /*[NEW] END LOOP: for each tag in allTags: */
+  
+  /*[NEW] add html form allTagsHTML to tagList */
+  tagList.insertAdjacentHTML('beforeend', allTagsHTML);
 }
 generateTags();
-
-
 
 function tagClickHandler(event){
   /* [DONE] prevent default action for this event */
@@ -154,8 +185,6 @@ function tagClickHandler(event){
   generateTitleLinks('[data-tags~="' + tag + '"]');
 }
 
-
-
 function addClickListenersToTags(){
   /* [DONE] find all links to tags */
   const LinksToTag = document.querySelectorAll('a[href^="#tag-"]'); 
@@ -169,12 +198,6 @@ function addClickListenersToTags(){
   }
 }
 addClickListenersToTags();
-
-
-
-
-
-
 
 function generateAuthors(){
   /* [DONE]find all articles */
@@ -204,8 +227,6 @@ function generateAuthors(){
   }
 }
 generateAuthors();
-
-
 
 function authorClickHandler(event){
   /* [DONE] prevent default action for this event */
@@ -241,8 +262,6 @@ function authorClickHandler(event){
   /* [DONE] execute function "generateTitleLinks" with article selector as argument */
   generateTitleLinks('[data-author="' + author + '"]');
 }
-
-
 
 function addClickListenersToAuthor(){
   /* [DONE]find all links to tags */
