@@ -123,7 +123,6 @@ body {
 /* tag cloud*/
 .inline li {
   display: inline-block;
-  text-decoration: none;
 }
 .inline a {
   text-decoration: none;
@@ -152,5 +151,9 @@ body {
 .tag-size-5 {
   font-size:35px;
   color: rgb(241, 47, 21);
+}
+
+.authors a {
+  text-decoration: none;
 }
 
