@@ -24,7 +24,7 @@
             "error",
             "always"
         ],
-        "no-console": [
+		 "no-console": [
             "off"
         ],
 		"no-prototype-builtins": [

@@ -141,7 +141,7 @@ function generateTags(){
   for(let tag in allTags){
     /*console.log(tag);*/
     /*[NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML +='<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '"><span>' + tag + ' (' + allTags[tag] + ')'+ '&nbsp</span></a></li>';
+    allTagsHTML +='<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '"><span>' + tag + '&nbsp</span></a></li>';
   }
   /*[NEW] END LOOP: for each tag in allTags: */
   
@@ -210,15 +210,15 @@ function generateAuthors(){
     const authorList = article.querySelector(optArticleAuthorSelector); 
     /*console.log(authorList);*/
     /* [DONE] make html variable with empty string */
-    let linkhtml = ' ';
+    let linkHtml = ' ';
     /*[DONE]get tags from data-tags attribute*/ 
     const authorTag = article.getAttribute('data-author');
     /*console.log(authorTag);*/
     /* [DONE] generate HTML of the link */
-    linkhtml = '<a href="#author-' + authorTag + '"><span>' + authorTag + '</span></a>';
+    linkHtml = '<a href="#author-' + authorTag + '"><span>' + authorTag + '</span></a>';
     /*console.log(html);*/
     /* [DONE] add generated code to html variable */
-    authorList.insertAdjacentHTML('beforeend', linkhtml);
+    authorList.insertAdjacentHTML('beforeend', linkHtml);
     /* END LOOP: for each tag */
     
     /* insert HTML of all the links into the tags wrapper */
