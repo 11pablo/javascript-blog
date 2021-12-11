@@ -1,4 +1,7 @@
 'use strict';
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+};
 
 function titleClickHandler(event){ //event- kliknięcie
   event.preventDefault(); /*wyłączenie hasha przewijania, adres się nie zmienia*/
@@ -54,7 +57,11 @@ function generateTitleLinks(customSelector = ''){
     const articleTitle = article.querySelector(optTitleSelector).innerHTML;
     /*console.log('title article:' + articleTitle);*/
     /* [DONE] create HTML of the link */
-    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = templates.articleLink(linkHTMLData);
+    console.log(linkHTML);
+    console.log(articleId);
+    console.log(articleTitle);
     /*console.log('code link:' + linkHTML);*/
     /* [DONE] insert link into titleList */
     titleList.insertAdjacentHTML('beforeend', linkHTML);
@@ -255,10 +262,6 @@ function generateAuthors(){
   
 }
 generateAuthors();
-
-
-
-
 
 function authorClickHandler(event){
   /* [DONE] prevent default action for this event */
